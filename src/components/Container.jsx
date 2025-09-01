@@ -3,7 +3,7 @@ import History from "./History";
 import ExpenseForm from "./ExpenseForm";
 import { toast } from "react-toastify";
 import BalanceContainer from "./BalanceContainer";
-import Search from "./search";
+
 const INITIAL = []
 const Container = () => {
     const [transaction, settransaction] = useState(INITIAL);

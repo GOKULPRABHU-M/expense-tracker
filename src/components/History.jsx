@@ -1,9 +1,9 @@
 import ExpenseItem from "./ExpenseItem";
-import Search from "./search";
+
 
 const History = (props) => {
-    const { transaction, deletetransaction, edittransaction,historydata,sethistory} = props
-    const showhistory=()=>{
+    const { transaction, deletetransaction, edittransaction, historydata, sethistory } = props
+    const showhistory = () => {
         sethistory(!historydata)
     }
     return (
@@ -12,12 +12,11 @@ const History = (props) => {
             <h3>History</h3>
             <button className="historybutton" onClick={showhistory}>history</button>
             <>
-            {historydata ==true ?<Search/>:null}
-            {historydata ==true ?(transaction.map((i) => {
-                return <ExpenseItem key={i._id} i={i} deletetransaction={deletetransaction} edittransaction={edittransaction} />
-            })):null}
+                {historydata == true ? (transaction.map((i) => {
+                    return <ExpenseItem key={i._id} i={i} deletetransaction={deletetransaction} edittransaction={edittransaction} />
+                })) : null}
             </>
-            
+
         </div>
 
     )
