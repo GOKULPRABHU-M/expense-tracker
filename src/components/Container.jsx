@@ -11,7 +11,7 @@ const Container = () => {
     const [historydata,sethistory]=useState(false)
 
     const addexpense = async (title, amount) => {
-        await fetch("http://localhost:7000/add", {
+        await fetch("https://expense-tracker-backend-ap3a.onrender.com/add", {
             method: "POST",
             headers: { "content-type": "application/json" },
             body: JSON.stringify({ title, amount })
@@ -22,7 +22,7 @@ const Container = () => {
         getexpense();
     }, [])
     const getexpense = async () => {
-        const res = await fetch("http://localhost:7000/getallexpense", {
+        const res = await fetch("https://expense-tracker-backend-ap3a.onrender.com/getallexpense", {
             method: "GET"
         });
         const data = await res.json();
@@ -30,7 +30,7 @@ const Container = () => {
         
     }
     const deletetransaction = async (_id) => {
-        await fetch("http://localhost:7000/deleteexpense", {
+        await fetch("https://expense-tracker-backend-ap3a.onrender.com/deleteexpense", {
             method: "DELETE",
             headers: { "content-type": "application/json" },
             body: JSON.stringify({ _id })
@@ -43,7 +43,7 @@ const Container = () => {
         setedit(i)
     }
     const updatexpense = async (_id, title, amount) => {
-        await fetch("http://localhost:7000/editexpense", {
+        await fetch("https://expense-tracker-backend-ap3a.onrender.com/editexpense", {
             method: "PUT",
             headers: { "content-type": "application/json" },
             body: JSON.stringify({ _id, title, amount })
