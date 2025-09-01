@@ -1,42 +1,62 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import History from "./History";
 import ExpenseForm from "./ExpenseForm";
 import { toast } from "react-toastify";
 import BalanceContainer from "./BalanceContainer";
+import Search from "./search";
 const INITIAL = []
 const Container = () => {
     const [transaction, settransaction] = useState(INITIAL);
-    const [edititem,setedit]=useState(null)
-    console.log(edititem)
-    const addexpense = (title, amount) => {
-        settransaction([
-            ...transaction, { id: transaction.length + 1, title: title, amount: amount }
-        ])
+    const [edititem, setedit] = useState(null)
+    const [historydata,sethistory]=useState(false)
+
+    const addexpense = async (title, amount) => {
+        await fetch("http://localhost:7000/add", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ title, amount })
+        });
+        getexpense();
     }
-    const deletetransaction = (id) => {
-        let deleted = transaction.filter((t) => {
-            return t.id !== id
+    useEffect(() => {
+        getexpense();
+    }, [])
+    const getexpense = async () => {
+        const res = await fetch("http://localhost:7000/getallexpense", {
+            method: "GET"
+        });
+        const data = await res.json();
+        settransaction(data);
+        
+    }
+    const deletetransaction = async (_id) => {
+        await fetch("http://localhost:7000/deleteexpense", {
+            method: "DELETE",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ _id })
         })
-        settransaction(deleted)
+        getexpense();
     }
-    const edittransaction=(i)=>{
+
+
+    const edittransaction = (i) => {
         setedit(i)
     }
-    const updatexpense=((id,title,amount)=>{
-       const ut= transaction.map((t)=>{
-            if(t.id==id)
-                return{id:id,title:title,amount:amount}
-            else
-                return t
+    const updatexpense = async (_id, title, amount) => {
+        await fetch("http://localhost:7000/editexpense", {
+            method: "PUT",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ _id, title, amount })
         })
-        settransaction(ut)
-    })
+        toast.info("edited successfully")
+        getexpense()
+    }
     return (
         <div className="container">
             <h2>Expense Tracker</h2>
             <BalanceContainer transaction={transaction} />
-            <History transaction={transaction} deletetransaction={deletetransaction} edittransaction={edittransaction} />
-            <ExpenseForm addexpense={addexpense} edititem={edititem} updatexpense={updatexpense} setedit={setedit}/>
+            <History transaction={transaction} deletetransaction={deletetransaction} edittransaction={edittransaction} historydata={historydata} sethistory={sethistory}/>
+            <ExpenseForm addexpense={addexpense} edititem={edititem} updatexpense={updatexpense} setedit={setedit} />
         </div>
     )
 }
