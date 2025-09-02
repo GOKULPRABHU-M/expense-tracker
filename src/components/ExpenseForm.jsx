@@ -14,12 +14,14 @@ const ExpenseForm = (props) => {
     }
     const handleramount = (e) => {
         setamount(e.target.value)
+        
     }
     const handlesubmit = (e) => {
         e.preventDefault();
         if (edititem) {
             updatexpense(edititem._id, title, amount)
             setedit(null)
+            
         }
         else if (title && amount) {
             addexpense(title, amount);

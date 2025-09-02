@@ -51,6 +51,7 @@ const Container = () => {
         toast.info("edited successfully")
         getexpense()
     }
+    
     return (
         <div className="container">
             <h2>Expense Tracker</h2>

@@ -128,3 +128,7 @@ body{
   padding: 10px;
   cursor: pointer;
 }
+.date{
+  color: #979696;
+  font-size: 12px;
+}

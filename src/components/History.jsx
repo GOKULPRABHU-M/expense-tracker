@@ -2,7 +2,7 @@ import ExpenseItem from "./ExpenseItem";
 
 
 const History = (props) => {
-    const { transaction, deletetransaction, edittransaction, historydata, sethistory } = props
+    const { transaction, deletetransaction, edittransaction,historydata,sethistory} = props
     const showhistory = () => {
         sethistory(!historydata)
     }
